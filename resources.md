@@ -6,3 +6,5 @@
 
 
 ### Asim
+http://www.cs.utexas.edu/~cv-fall2012/slides/fall2012_02_specific_objects.pdf
+Complete Pipeline - pg690 (Szeliski)
