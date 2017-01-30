@@ -27,3 +27,5 @@ Complete Pipeline - pg690 (Szeliski)
 
 
 [type error opencv](http://stackoverflow.com/questions/7587490/converting-numpy-array-to-opencv-array)
+
+[descriptor extractor](http://stackoverflow.com/questions/33332055/opencv-how-to-create-a-descriptorextractor-object)
