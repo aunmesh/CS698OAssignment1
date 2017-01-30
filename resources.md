@@ -10,6 +10,12 @@
 [Whitening - 2](http://stats.stackexchange.com/questions/23420/is-whitening-always-good)
 
 
+[Hierarchical bag-of-word library for C++](http://webdiis.unizar.es/~dorian/index.php?p=31#nister06)
+
+
+[libvot : A C++11 multithread library for image retrieval](https://github.com/hlzz/libvot)
+
+
 ### Asim
 [graumann slides](http://www.cs.utexas.edu/~cv-fall2012/slides/fall2012_02_specific_objects.pdf)
 
