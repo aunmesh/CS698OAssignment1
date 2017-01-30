@@ -22,4 +22,8 @@
 [graumann slides](http://www.cs.utexas.edu/~cv-fall2012/slides/fall2012_02_specific_objects.pdf)
 
 Complete Pipeline - pg690 (Szeliski)
+
 [Opencv ObjectRecog](http://docs.opencv.org/2.4/modules/features2d/doc/object_categorization.html)
+
+
+[type error opencv](http://stackoverflow.com/questions/7587490/converting-numpy-array-to-opencv-array)
