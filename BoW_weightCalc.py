@@ -1,20 +1,24 @@
 import cv2
 import numpy as np
 
-#Functio to calculate the ImageDescriptor of an Image given ImgPath and a numpy matrix(n*128)
+#Function to calculate the ImageDescriptor of an Image given ImgPath and a numpy matrix(n*128)
 
-def HistogramCalculator(Imgpath,Vocab):
+#Dextractor is a string inputted to the function with the name of the descriptor extractor(e.g. BRIEF,SURF,SIFT)
+#DMatcher is same as above
+def HistogramCalculator(Imgpath,Vocab, Dext="SIFT" , DMatch="BFMatcher"):
 	img = cv2.imread(ImgPath)
-		
+	
 	#Dextractor
-	SIFT = cv2.xfeatures2d.SIFT_create()
+	if(Dext == "SIFT")	
+		Dextractor = cv2.xfeatures2d.SIFT_create()
 
 	#DMatcher
-	bf = cv2.BFMatcher()
+	if(DMatcher == "BFMatcher")
+	DMatcher = cv2.BFMatcher()
 
-	ImgDescEx = cv2.BOWImgDescriptorExtractor(SIFT,bf)
-
-	kp = SIFT.detect(img)
+	ImgDescEx = cv2.BOWImgDescriptorExtractor(Dextractor,DMatcher)
+	ImgDescEx.setVocabulary(Vocab)
+	kp = Dextractor.detect(img)
 	return ImgDescEx.compute(img,kp)
 
 
