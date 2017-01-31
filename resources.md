@@ -18,6 +18,10 @@
 
 [VGG-FASTANN](http://www.robots.ox.ac.uk/~vgg/software/fastanncluster/)
 
+
+[ImgDesExtr example python](http://answers.opencv.org/question/82221/error-using-flann-matcher-for-bowimgdescriptorextractor-in-opencv-python/)
+
+
 ### Asim
 [graumann slides](http://www.cs.utexas.edu/~cv-fall2012/slides/fall2012_02_specific_objects.pdf)
 
