@@ -1,40 +1,46 @@
-#script to compute keypoints, descriptors, and ImageHistograms using a vocabulary, and return them
-import cv2
 import numpy as np
 import os
 import sys
+from glob import glob
+import pickle
 
-def ReWeightHist(Hist,FreqHist,Total):
-	return Hist * np.log(Total/FreqHist)
+#def PreCompute(ImgPath,Vocab,FreqHist,TotImages,Dextractor="SIFT",DMatcher="bf")
+
 
 sys.path.append(os.getcwd())
 
-def (ImgPath,VocabPath,FreqHist,TotImages,Dextractor="SIFT",DMatcher="bf"):
+from Image_precompute import *
+from GlobalVariables import *
 
-	Img = cv2.imread(ImgPath)
+subdir = glob(rootfolder + "/*/") #rootfolder is specified in global variables without a trailing /
 
-	if(Dextractor=="SIFT"):
-		Dextract = cv2.xfeatures2D.SIFT_create()
+BoW = np.load(VocabPath)
+BoW = BoW.astype(np.float32)
 
+BoW_freq = np.load(VocabfreqPath)
+BoW_freq = BoW_freq.astype(np.float32)
 
-	if(DMatcher=="bf")
-		Dmatch = cv2.BFMatcher()
+TotImages = np.load(TotImagesPath)
 
-	kp,desc = Dextract.detectAndCompute(Img, None)
-	
-	keypoint_list = []
+for temp in subdir:
+	os.chdir(temp)
+	imagefiles = glob(temp + "*.jpg*")
 
-	for point in kp:
-		temp = (point.pt, point.size, point.angle, point.response, point.octave, point.class_id) 
-		keypoint_list.append(temp)
+	for l in imagefiles:
+		print("loop starts") 
+		temp_kp,temp_desc,temp_hist = PreCompute(l,BoW,BoW_freq,TotImages,"SIFT","bf")		
+		import pickle
 
-	Vocab = np.load(VocabPath)
-	Vocab =  Vocab.astype(np.float32)
+		outfile_kp = l[0:-4] + "_kp"
+		outfile_desc = l[0:-4] + "_desc"
+		outfile_hist = l[0:-4] + "_hist"
 
-	ImgDescEx = cv2.BOWImgDescriptorExtractor(Dextract,Dmatch)
-	ImgDescEx.setVocabulary(Vocab)
+		with open('outfile_kp', 'wb') as fp:
+		    pickle.dump(temp_kp, fp)
 
-	Test_Hist = ImgDescEx.compute(Img,kp)
-	Test_Hist = ReWeightHist(Test_Hist,FreqHist,TotImages)
+		np.save(outfile_desc,temp_desc)
+		np.save(outfile_hist,temp_hist)
 
-	return keypoint_list,desc,Test_Hist
+		print("loop ends")
+
+print("All the DB images have been processed for Descriptors,Keypoints and ImageHistograms")
