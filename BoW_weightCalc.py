@@ -5,16 +5,16 @@ import numpy as np
 
 #Dextractor is a string inputted to the function with the name of the descriptor extractor(e.g. BRIEF,SURF,SIFT)
 #DMatcher is same as above
-def HistogramCalculator(Imgpath,Vocab, Dext="SIFT" , DMatch="BFMatcher"):
+def HistogramCalculator(ImgPath,Vocab, Dext="SIFT" , DMatch="BFMatcher"):
 	img = cv2.imread(ImgPath)
 	
 	#Dextractor
-	if(Dext == "SIFT")	
+	if(Dext == "SIFT"):	
 		Dextractor = cv2.xfeatures2d.SIFT_create()
 
 	#DMatcher
-	if(DMatcher == "BFMatcher")
-	DMatcher = cv2.BFMatcher()
+	if(DMatch == "BFMatcher"):
+		DMatcher = cv2.BFMatcher()
 
 	ImgDescEx = cv2.BOWImgDescriptorExtractor(Dextractor,DMatcher)
 	ImgDescEx.setVocabulary(Vocab)
