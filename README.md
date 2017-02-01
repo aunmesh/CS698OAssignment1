@@ -19,3 +19,6 @@ Mean Average Precision on the Top K images retrieved. [(Video explaining MAP)](h
 
 **Submission format:** A zip file containing all of your code along with a readme file. Also include a report on your approach and any testing results you obtained.
 Submission deadline: 3rd February, 2017
+
+
+

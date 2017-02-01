@@ -33,3 +33,5 @@ Complete Pipeline - pg690 (Szeliski)
 [type error opencv](http://stackoverflow.com/questions/7587490/converting-numpy-array-to-opencv-array)
 
 [descriptor extractor](http://stackoverflow.com/questions/33332055/opencv-how-to-create-a-descriptorextractor-object)
+
+[histogram matching](http://www.pyimagesearch.com/2014/07/14/3-ways-compare-histograms-using-opencv-python/)
