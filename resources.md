@@ -35,3 +35,5 @@ Complete Pipeline - pg690 (Szeliski)
 [descriptor extractor](http://stackoverflow.com/questions/33332055/opencv-how-to-create-a-descriptorextractor-object)
 
 [histogram matching](http://www.pyimagesearch.com/2014/07/14/3-ways-compare-histograms-using-opencv-python/)
+
+[Save and Load Keypoints from file](http://hanzratech.in/2015/01/15/saving-and-loading-keypoints-in-file-using-opencv-and-python.html)
