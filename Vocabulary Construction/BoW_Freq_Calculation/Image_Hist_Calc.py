@@ -19,11 +19,6 @@ def HistogramCalculator(ImgPath,Vocab, Dext="SIFT" , DMatch="BFMatcher"):
 	ImgDescEx = cv2.BOWImgDescriptorExtractor(Dextractor,DMatcher)
 	ImgDescEx.setVocabulary(Vocab)
 	kp = Dextractor.detect(img)
-	result = ImgDescEx.compute(img,kp)
-	
-	del ImgDescEx
-	del Dextractor
-	del DMatcher
-	del kp
+	return ImgDescEx.compute(img,kp)
 
-	return result
+

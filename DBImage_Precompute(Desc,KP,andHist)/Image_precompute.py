@@ -9,7 +9,7 @@ def ReWeightHist(Hist,FreqHist,Total):
 
 sys.path.append(os.getcwd())
 
-def PreCompute(ImgPath,VocabPath,FreqHist,TotImages,Dextractor="SIFT",DMatcher="bf"):
+def PreCompute(ImgPath,Vocab,FreqHist,TotImages,Dextractor="SIFT",DMatcher="bf"):
 
 	Img = cv2.imread(ImgPath)
 
@@ -28,8 +28,6 @@ def PreCompute(ImgPath,VocabPath,FreqHist,TotImages,Dextractor="SIFT",DMatcher="
 		temp = (point.pt, point.size, point.angle, point.response, point.octave, point.class_id) 
 		keypoint_list.append(temp)
 
-	Vocab = np.load(VocabPath)
-	Vocab =  Vocab.astype(np.float32)
 
 	ImgDescEx = cv2.BOWImgDescriptorExtractor(Dextract,Dmatch)
 	ImgDescEx.setVocabulary(Vocab)

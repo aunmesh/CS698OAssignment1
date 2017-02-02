@@ -7,10 +7,10 @@ import sys
 
 sys.path.append(os.getcwd())
 
-from globalvariables import *
+from GlobalVariables import *
 from Image_Hist_Calc import *
 
-subdir = glob(rootfolder + "/*/") #rootfolder is specified in global variables without a trailing /
+subdir = glob(RootFolder + "/*/") #rootfolder is specified in global variables without a trailing /
 
 BoW = np.load(VocabPath)
 BoW = BoW.astype(np.float32)
@@ -33,5 +33,5 @@ for temp in subdir:
 
 print("weights have been calculated")
 
-np.save(rootfolder + "/BoW_weights",BoW_weights)
-np.save(rootfolder + "/TotalNumberOfImages",totalimg)
+np.save(RootFolder + "/BoW_weights",BoW_weights)
+np.save(RootFolder + "/TotalNumberOfImages",totalimg)

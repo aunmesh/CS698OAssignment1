@@ -1,0 +1,2 @@
+RootFolder = "/home/aunmesh/Academics/8th semester/CS698o-Visual Recognition/Assignment1/CS698OAssignment1/data_new/train_data"
+VocabPath = "/home/aunmesh/Academics/8th semester/CS698o-Visual Recognition/Assignment1/CS698OAssignment1/vocab_100k.npy"
