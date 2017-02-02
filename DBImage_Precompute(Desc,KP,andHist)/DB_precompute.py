@@ -87,7 +87,7 @@ for temp in subdir:
 		outfile_hist = l[0:-4] + "_hist"
 
 		#Pickle is used for saving list, which is temp_kp
-		with open('outfile_kp', 'wb') as fp:
+		with open(outfile_kp, 'wb') as fp:
 		    pickle.dump(temp_kp, fp)
 
 

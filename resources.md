@@ -39,3 +39,5 @@ Complete Pipeline - pg690 (Szeliski)
 [Save and Load Keypoints from file](http://hanzratech.in/2015/01/15/saving-and-loading-keypoints-in-file-using-opencv-and-python.html)
 
 [Sorting a List using a particular index of inner list](http://stackoverflow.com/questions/4174941/how-to-sort-a-list-of-lists-by-a-specific-index-of-the-inner-list)
+
+[Histogram Comparison](http://stackoverflow.com/questions/6499491/comparing-two-histograms)

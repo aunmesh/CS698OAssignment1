@@ -3,11 +3,17 @@ import numpy as np
 import os
 import sys
 from glob import glob
+import pickle
 
 sys.path.append(os.getcwd())
 
+#def ReWeightHist(Hist,FreqHist,Total):
+#	return Hist * np.log(Total/(FreqHist+1))
+
 def ReWeightHist(Hist,FreqHist,Total):
-	return Hist * np.log(Total/FreqHist)
+	Hist = Hist * np.log(Total/(FreqHist+1))
+	return Hist * (FreqHist < 0.002 * Total).astype(int)
+
 
 from HistogramMatcher import *
 
@@ -21,11 +27,11 @@ from HistogramMatcher import *
 #Dextractor - Descriptor Extractor to be used
 #Dmatcher - Descriptor Matcher to be used
 
-def ScoreCalculator(RootFolder, TestImgPth, VocabPath, VisualWordFreq, TotalDBImages, OutputPth , Dextractor = "SIFT", Dmatcher = "bf"):
+def ScoreCalculator(RootFolder, TestImgPth, Vocab, VisualWordFreq, TotalDBImages, OutputPth , Dextractor = "SIFT", Dmatcher = "bf"):
 	
-	Vocab = np.load(VocabPath)
+	#Vocab = np.load(VocabPath)
 	Vocab =  Vocab.astype(np.float32)
-	Test_Img = cv2.imread(TestImgPth)
+	TestImg = cv2.imread(TestImgPth)
 
 	#Dextractor
 	if(Dextractor == "SIFT"):
@@ -37,16 +43,16 @@ def ScoreCalculator(RootFolder, TestImgPth, VocabPath, VisualWordFreq, TotalDBIm
 
 	ImgDescEx = cv2.BOWImgDescriptorExtractor(Dextract,Dmatch)
 	ImgDescEx.setVocabulary(Vocab)
-	Test_kp = SIFT.detect(TestImg)
+	Testkp = Dextract.detect(TestImg)
 
-	Test_Hist = ImgDescEx.compute(TestImg,Test_kp)
+	TestHist = ImgDescEx.compute(TestImg,Testkp)
 
 	#Reweighting the above calculated Histogram according to frequencies of each bin wrt to the Database
-	Test_Hist = ReWeightHist(TestImgHist, VisualWordFreq, TotalDBImages)
+	TestHist = ReWeightHist(TestHist, VisualWordFreq, TotalDBImages)
 
-	Output_List = [["Img_Dir_Name","DB_Img_Name","Matching_Score"]]
+	OutputList = [["Img_Dir_Name","DB_Img_Name","Matching_Score"]]
 
-	subdir = glob(rootfolder + "/*/") #rootfolder is specified in global variables without a trailing /
+	subdir = glob(RootFolder + "/*/") #rootfolder is specified in global variables without a trailing /
 
 	for temp in subdir:
 
@@ -55,15 +61,25 @@ def ScoreCalculator(RootFolder, TestImgPth, VocabPath, VisualWordFreq, TotalDBIm
 
 		for temp2 in DB_precomputed:
 
-			print("LoopStarts") 
+			#print("LoopStarts") 
 
-			DB_Hist = np.load(temp2)
-			Temp_Score = HistogramMatcher(Test_Hist,DB_Hist)
-			ImgFileName = temp2.split("/")[-2][0:9] #9 is the length of "_hist.npy"
+			DBHist = np.load(temp2)
+			TempScore = HistogramMatcher(TestHist,DBHist,VisualWordFreq,TotalDBImages)
+			ImgFileName = temp2.split("/")[-1][0:-9] #9 is the length of "_hist.npy"
 			ImgDirName = temp.split("/")[-2]
-			ListElement = [ImgDirName, ImgFileName,Temp_Score]
+			ListElement = [ImgDirName, ImgFileName,TempScore]
 
-			Output_List.append(ListElement)
-			print("LoopEnds")
+			OutputList.append(ListElement)
+			#print(OutputList)
+			#print("LoopEnds")
 
-	return Output_List.sort(key=lambda x: x[2], reverse=True)
+		
+	#OutputList = OutputList.sort(key=lambda x: x[2], reverse=True)
+
+	return OutputList
+	'''
+	outfile = OutputPth + "/result"
+
+	with open(outfile, 'wb') as fp:
+	    pickle.dump(OutputList, fp)
+	'''
