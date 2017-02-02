@@ -1,0 +1,6 @@
+#rootfolder = "/media/ninad/Study/Sem8/cs6980_VRcog/course/asg1/data_new/data01"
+#trainfolder = "/media/ninad/Study/Sem8/cs6980_VRcog/course/asg1/data_new/train_data"
+#testfolder = "/media/ninad/Study/Sem8/cs6980_VRcog/course/asg1/data_new/test_data"
+rootfolder = "/media/ninad/Study/Sem8/cs6980_VRcog/course/asg1/data_new/train_desc"
+trainfolder = "/media/ninad/Study/Sem8/cs6980_VRcog/course/asg1/data_new/train_desc"
+testfolder = "/media/ninad/Study/Sem8/cs6980_VRcog/course/asg1/data_new/test_desc"
