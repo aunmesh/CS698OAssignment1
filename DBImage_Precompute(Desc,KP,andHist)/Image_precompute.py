@@ -4,21 +4,32 @@ import numpy as np
 import os
 import sys
 
+Dextractor = "SIFT"
+DMatcher = "bf"
+
+
+if(Dextractor=="SIFT"):
+	Dextract = cv2.xfeatures2D.SIFT_create()
+
+if(DMatcher=="bf")
+	Dmatch = cv2.BFMatcher()
+
+ImgDescEx = cv2.BOWImgDescriptorExtractor(Dextract,Dmatch)
+
+def SetVocab(Vocab):
+	global ImgDescEx
+	ImgDescEx.setVocabulary(Vocab)
+
+
+
 def ReWeightHist(Hist,FreqHist,Total):
 	return Hist * np.log(Total/FreqHist)
 
 sys.path.append(os.getcwd())
 
-def PreCompute(ImgPath,Vocab,FreqHist,TotImages,Dextractor="SIFT",DMatcher="bf"):
+def PreCompute(ImgPath, FreqHist,TotImages,Dextractor="SIFT",DMatcher="bf"):
 
 	Img = cv2.imread(ImgPath)
-
-	if(Dextractor=="SIFT"):
-		Dextract = cv2.xfeatures2D.SIFT_create()
-
-
-	if(DMatcher=="bf")
-		Dmatch = cv2.BFMatcher()
 
 	kp,desc = Dextract.detectAndCompute(Img, None)
 	
@@ -27,10 +38,6 @@ def PreCompute(ImgPath,Vocab,FreqHist,TotImages,Dextractor="SIFT",DMatcher="bf")
 	for point in kp:
 		temp = (point.pt, point.size, point.angle, point.response, point.octave, point.class_id) 
 		keypoint_list.append(temp)
-
-
-	ImgDescEx = cv2.BOWImgDescriptorExtractor(Dextract,Dmatch)
-	ImgDescEx.setVocabulary(Vocab)
 
 	Test_Hist = ImgDescEx.compute(Img,kp)
 	Test_Hist = ReWeightHist(Test_Hist,FreqHist,TotImages)

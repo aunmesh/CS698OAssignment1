@@ -13,7 +13,6 @@ BoW = BoW.astype(np.float32)
 
 BoW_weights = np.zeros(len(BoW))
 
-
 Dext = "SIFT"
 DMatch = "BFMatcher"
 
@@ -59,9 +58,11 @@ for temp in subdir:
 	count2 = 0
 	for l in imagefiles:
 		totalimg = totalimg + 1
+
 		if(count2%5==0):
 			print("In " + str(count2+1) + " image out of " + str(len(imagefiles)))
 		count2+=1
+
 		temp2 = HistogramCalculator(l)
 		BoW_weights = BoW_weights + (temp2>0).astype(int)
 	print("Dir took %d seconds" %(time.time() - start_time))
