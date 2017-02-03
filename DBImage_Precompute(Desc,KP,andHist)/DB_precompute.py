@@ -11,10 +11,12 @@ sys.path.append(os.getcwd())
 #from Image_precompute import *
 from GlobalVariables import *
 
+
 #############################################################################
 
 Dextractor = "SIFT"
 DMatcher = "bf"
+
 
 BoW = np.load(VocabPath)   #VocabPaath is specified in globalvariables
 BoW = BoW.astype(np.float32)
@@ -40,11 +42,9 @@ def ReWeightHist(Hist,FreqHist,Total):
 	return Hist * np.log(Total/(FreqHist+1))
 
 def PreCompute(ImgPath):
-
 	Img = cv2.imread(ImgPath)
 
 	kp,desc = Dextract.detectAndCompute(Img, None)
-	
 	keypoint_list = []
 
 	for point in kp:
@@ -52,9 +52,10 @@ def PreCompute(ImgPath):
 		keypoint_list.append(temp)
 
 	Test_Hist = ImgDescEx.compute(Img,kp)
-	Test_Hist = ReWeightHist(Test_Hist,BoW_freq,TotImages)
+	#Test_Hist = ReWeightHist(Test_Hist,BoW_freq,TotImages)
 
 	return keypoint_list,desc,Test_Hist
+	#return keypoint_list
 
 #############################################################################
 
@@ -72,6 +73,7 @@ for temp in subdir:
 
 	os.chdir(temp)
 	imagefiles = glob(temp + "*.jpg*")
+	#imagefiles = glob(temp + "*_hist.npy*")
 	print("In " + str(count1+1) + " directory out of " + str(len(subdir)))
 	count1+=1
 
@@ -80,6 +82,7 @@ for temp in subdir:
 			print("In " + str(count2+1) + " image out of " + str(len(imagefiles)))
 		count2+=1
  
+ 		
 		temp_kp,temp_desc,temp_hist = PreCompute(l)
 
 		outfile_kp = l[0:-4] + "_kp"
@@ -89,11 +92,11 @@ for temp in subdir:
 		#Pickle is used for saving list, which is temp_kp
 		with open(outfile_kp, 'wb') as fp:
 		    pickle.dump(temp_kp, fp)
-
+		
 
 		np.save(outfile_desc,temp_desc)
 		np.save(outfile_hist,temp_hist)
-
+		
 	print("Dir took %d seconds" %(time.time() - start_time))
 	start_time = time.time()
 

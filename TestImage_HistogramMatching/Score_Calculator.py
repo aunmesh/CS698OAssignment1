@@ -10,10 +10,13 @@ sys.path.append(os.getcwd())
 #def ReWeightHist(Hist,FreqHist,Total):
 #	return Hist * np.log(Total/(FreqHist+1))
 
-def ReWeightHist(Hist,FreqHist,Total):
-	Hist = Hist * np.log(Total/(FreqHist+1))
-	return Hist * (FreqHist < 0.002 * Total).astype(int)
+#def ReWeightHist(Hist,FreqHist,Total,StopFrac=0.05):
+#	Hist = Hist * np.log(Total/(FreqHist+1))
+#	return Hist * (FreqHist < StopFrac * Total).astype(int)
 
+def ReWeightHist(Hist,FreqHist,Total,UpperLimit=0.1,LowerLimit=0.02):
+	temp_hist = Hist * ((FreqHist < UpperLimit*Total) * (FreqHist > LowerLimit*Total)).astype(int)
+	return temp_hist.astype(np.float32)
 
 from HistogramMatcher import *
 
@@ -27,7 +30,7 @@ from HistogramMatcher import *
 #Dextractor - Descriptor Extractor to be used
 #Dmatcher - Descriptor Matcher to be used
 
-def ScoreCalculator(RootFolder, TestImgPth, Vocab, VisualWordFreq, TotalDBImages, OutputPth , Dextractor = "SIFT", Dmatcher = "bf"):
+def ScoreCalculator(RootFolder, TestImgPth, Vocab, VocabFreq, TotalDBImages, OutputPth, method = 1, UpperLimit = 0.1, LowerLimit=0.02, Dextractor = "SIFT", Dmatcher = "bf"):
 	
 	#Vocab = np.load(VocabPath)
 	Vocab =  Vocab.astype(np.float32)
@@ -48,11 +51,11 @@ def ScoreCalculator(RootFolder, TestImgPth, Vocab, VisualWordFreq, TotalDBImages
 	TestHist = ImgDescEx.compute(TestImg,Testkp)
 
 	#Reweighting the above calculated Histogram according to frequencies of each bin wrt to the Database
-	TestHist = ReWeightHist(TestHist, VisualWordFreq, TotalDBImages)
+	TestHist = ReWeightHist(TestHist, VocabFreq, TotalDBImages,UpperLimit,LowerLimit)
 
 	OutputList = [["Img_Dir_Name","DB_Img_Name","Matching_Score"]]
 
-	subdir = glob(RootFolder + "/*/") #rootfolder is specified in global variables without a trailing /
+	subdir = glob(RootFolder + "/*/") 	#rootfolder is specified in global variables without a trailing /
 
 	for temp in subdir:
 
@@ -64,8 +67,11 @@ def ScoreCalculator(RootFolder, TestImgPth, Vocab, VisualWordFreq, TotalDBImages
 			#print("LoopStarts") 
 
 			DBHist = np.load(temp2)
-			TempScore = HistogramMatcher(TestHist,DBHist,VisualWordFreq,TotalDBImages)
+			DBHist = ReWeightHist(DBHist,VocabFreq,TotalDBImages,UpperLimit,LowerLimit)
+
+			TempScore = HistogramMatcher(TestHist,DBHist,method)
 			ImgFileName = temp2.split("/")[-1][0:-9] #9 is the length of "_hist.npy"
+			
 			ImgDirName = temp.split("/")[-2]
 			ListElement = [ImgDirName, ImgFileName,TempScore]
 
@@ -76,7 +82,8 @@ def ScoreCalculator(RootFolder, TestImgPth, Vocab, VisualWordFreq, TotalDBImages
 		
 	#OutputList = OutputList.sort(key=lambda x: x[2], reverse=True)
 
-	return OutputList
+	return OutputList[1:]
+
 	'''
 	outfile = OutputPth + "/result"
 
