@@ -25,12 +25,12 @@ class Tree:
 		node.parent = self
 		self.isLeaf = False
 		
-brch = 3
-levels = 4
-
-km = MiniBatchKMeans(n_clusters=brch, init='k-means++', n_init=10)     #Mini Batch
-#km = KMeans(n_clusters=brch, init='k-means++', n_init=10, n_jobs=-1)  # K-Means
+brch = 10
+levels = 8    # Number of leaf nodes will be big-O: O(brch^(levels-1)) as first level is the trivial level
 xvar = 0 # just a debugging variable
+
+km = MiniBatchKMeans(n_clusters=brch, init='k-means++', n_init=10)     #Mini Batch #No batch size used.
+#km = KMeans(n_clusters=brch, init='k-means++', n_init=10, n_jobs=-1)  
 
 def TreeMake(obs,brch,levels):
 	global km
@@ -45,10 +45,9 @@ def TreeMake(obs,brch,levels):
 		print("At level:",levels)
 		print(len(obs))
 		
-		if(len(obs)<=brch or levels==1):
+		if(len(obs)<= brch or levels==1):
 			p.value = -1
-			p.isLeaf = True	
-					
+			p.isLeaf = True						
 			return p
 			
 		else:				
@@ -66,4 +65,4 @@ def TreeMake(obs,brch,levels):
 			return p
 
 
-#over
+print("\n Definitions loaded \n")

@@ -3,14 +3,19 @@ import numpy as np
 from sklearn.cluster import MiniBatchKMeans, KMeans
 
 from TreeDef import * 
+from globvar import *
 
-#obs = np.load("train_desc.npy")
-obs = np.load("test_desc.npy")
-obs = obs.astype(np.float32)		
+obs = np.load(rootfolder + "train_desc.npy")
+#obs = obs.astype(np.float32)		
+		
+#brch=10		
+#levels=8 in TreeDef file
 		
 finalTree = TreeMake(obs,brch,levels)
 
-# Saving the constructed Tree
+#ALWAYS SAVE THE TREE IN A NEW FILE
 import pickle
-with open('tree_pickle_01.p', 'wb') as pfile:  #first-stage
+with open(rootfolder + "tree_10M_01.p", 'wb') as pfile:  #first-stage #ALWAYS SAVE THE TREE IN A NEW FILE
     pickle.dump(finalTree, pfile)
+
+print("\n Clustering over \n")

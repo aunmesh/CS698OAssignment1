@@ -1,5 +1,5 @@
-rootfolder = "/home/ninad/Desktop/course/asg1/data_new/alternate/test_desc/"  #Trying first on the training set
+rootfolder = "/home/ninad/Desktop/course/asg1/data_new/"
 
-trainfolder = "/home/ninad/Desktop/course/asg1/data_new/alternate/train_desc"
-testfolder = "/home/ninad/Desktop/course/asg1/data_new/alternate/test_desc"
+trainfolder = "/home/ninad/Desktop/course/asg1/data_new/train_data/"
+testfolder = "/home/ninad/Desktop/course/asg1/data_new/testing_data/"
 
