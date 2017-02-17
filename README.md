@@ -1,8 +1,17 @@
-# CS698OAssignment1
 ## Assignment 1 of CS698O(Visual Recognition)
 
+-----------------
 
-##Instance Recognition
+### Methods for improvement 
+
+- Implement VLAD
+- Higher order information about clusters and better normalization techniques
+- Spatial verificaition (using pyramid match kernel?)
+- Query expansion (but it can only be used if our top results are going to be good)
+
+-----------------
+
+### Instance Recognition
 
 **Problem Statement:** 
 Given a dataset of images of several objects your job is to train a model on it such that it is able to retrieve all the instances of a given test object. More specifially the given dataset consists of images of several objects and multiple instances of each object. When tested on an image/object your model's task is to retrieve all instances of the image in the dataset. In other words your model must give a similarity ranking on all images in the dataset such that instances of the object being tested have the highest rankings.
@@ -45,14 +54,6 @@ Submission deadline: 10th February, 2017
     
 -    [Sample output file](http://web.cse.iitk.ac.in/users/cs676/2017_visrec/www/asm1/imagename.txt)
 
-
 -----------------
-
-## Future improvements
-
-- Implement VLAD
-- Higher order information about clusters and better normalization techniques
-- Spatial verificaition (using pyramid match kernel?)
-- Query expansion (but it can only be used if our top results are going to be good)
 
 
