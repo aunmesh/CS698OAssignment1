@@ -46,3 +46,13 @@ Submission deadline: 10th February, 2017
 -    [Sample output file](http://web.cse.iitk.ac.in/users/cs676/2017_visrec/www/asm1/imagename.txt)
 
 
+-----------------
+
+## Future improvements
+
+- Implement VLAD
+- Higher order information about clusters and better normalization techniques
+- Spatial verificaition (using pyramid match kernel?)
+- Query expansion (but it can only be used if our top results are going to be good)
+
+
